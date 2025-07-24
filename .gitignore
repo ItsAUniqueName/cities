@@ -1,4 +1,5 @@
 node_modules
 .env
-nodemon.json
 build
+/src/generated
+src/logs

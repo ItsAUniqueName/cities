@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { getCounty } from "../controller/countyController";
+import { getCounty, getCountyById } from "../controller/countyController";
 
 const router = Router();
 
 router.get('/', getCounty);
+router.get('/:id', getCountyById);
 
 export default router;
