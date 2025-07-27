@@ -1,0 +1,26 @@
+@if (countyId() > 0) {
+    <div>
+    <h2>City List</h2>
+    <ul>
+        @for(city of cities(); track city.name){
+            <li>
+            <span>ID: {{ city.id }}</span> -
+            @if(editingCityId === city.id){
+                <ng-container>
+                    <input [(ngModel)]="editedCityName" />
+                    <button (click)="save(city.id!, editedCityName)">Save</button>
+                    <button (click)="cancelEditing()">Cancel</button>
+                    <button (click)="delete(city.id!)">Delete</button>
+                </ng-container>
+            } @else {
+                <ng-container>
+                    <span (click)="startEditing(city)" class="city-name">{{ city.name }}</span>
+                </ng-container>
+            }
+            </li>
+        }
+    </ul>
+    </div>
+} @else{
+    <p>Nincs kiválasztott megye!</p>
+}
