@@ -1,0 +1,10 @@
+<div>
+    @if(countyId() > 0) {
+    <mat-form-field>
+        <mat-label>Város hozzáadása</mat-label>
+        <input [(ngModel)]="name" matInput/>
+    </mat-form-field>
+    <button class="btn btn-primary btn-lg" (click)="save(name)">Mentés</button>
+    }
+</div>
+

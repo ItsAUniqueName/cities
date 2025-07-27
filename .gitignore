@@ -1,0 +1,9 @@
+node_modules
+#Remowe comment in case of later usage!
+#backend/.env
+build
+backend/src/generated
+backend/src/logs
+.angular
+.vscode
+public
