@@ -27,7 +27,7 @@ The project uses the following technologies, frameworks:
 The frotend is a straight-forward Angular application. The single page in the application is the homepage. Besides it, every other smaller component is stored in the components folder.
 The services, which enable communication with the backend API are in the services folder.
 
-##Backend
+## Backend
 The backend is a REST API. The main files are:
 - prisma/migrations - Stores the database migrations. this way our database will always be up to date.
 - prisma/schema.prisma - Prisma uses this file to generate the classes needed to handle the database.
@@ -62,7 +62,7 @@ npm install
 ```
 
 ##### Start PostgreSQL.
-Here we will use the docker image forr this.
+Here we will use the docker image for this.
 ```sh
 docker build -t my-postgres-image .
 docker run -d -p 5432:5432 --name my-postgres-container my-postgres-image
@@ -97,10 +97,10 @@ cd fron/src/environments
 apiUrl: "http://localhost:3000/"
 ```
 
-You can serve the application or build it. For local runnung and developement, i recommend use the serve command.
+You can serve the application or build it. For local running and developement, I recommend use the serve command.
 
 ```sh
-cd fron
+cd front
 ng serve
 ```
 
