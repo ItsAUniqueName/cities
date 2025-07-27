@@ -1,10 +1,12 @@
-<mat-form-field>
-  <mat-label>Válassz megyét!</mat-label>
-  <mat-select [(value)]="selected" (selectionChange)="sendCountyId(selected())">
-    @for (county of counties(); track county.name) {
-        <mat-option value="{{county.id}}">{{county.name}}</mat-option>
-    } @empty {
-        <mat-option value="">Nincs megye!</mat-option>
-    }
-  </mat-select>
-</mat-form-field>
+<div>
+  <mat-form-field>
+    <mat-label>Válassz megyét!</mat-label>
+    <mat-select [(value)]="selected" (selectionChange)="sendCountyId(selected())">
+      @for (county of counties(); track county.id) {
+          <mat-option value="{{county.id}}">{{county.name}}</mat-option>
+      } @empty {
+          <mat-option value="">Nincs megye!</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</div>

@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, InputSignal, output, OutputEmitterRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormField } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -14,28 +14,38 @@ import Swal from 'sweetalert2';
 export class CreateCity {
 
   cityService: CityService = inject(CityService);
-  countyId = input.required<number>();
+  countyId: InputSignal<number> = input.required<number>();
   name?: string;
+  saveIndicatorOutput: OutputEmitterRef<number> = output<number>();
 
   save(name?:string){
     if(name != ""){
       this.cityService.create(this.countyId(), name!).subscribe({
         next: data =>{
           if(data.id && data.id > 0){
+            this.saveIndicatorOutput.emit(1);
             Swal.fire({
               title: 'Sikeres mentés!',
-              //text: 'Something went wrong!',
+              text: '',
               icon: 'success',
               confirmButtonText: 'Ok'
             });
           }else{
             Swal.fire({
-              title: 'Error!',
-              text: 'Something went wrong!',
+              title: 'Sikertelen mentés!',
+              text: '',
               icon: 'error',
               confirmButtonText: 'Ok'
             });
           }
+        },
+        error: err => {
+          Swal.fire({
+            title: 'Váratlan hiba történt!',
+            text: '',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+          });
         }
       });
     }

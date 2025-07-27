@@ -5,10 +5,10 @@
     <div class="row">
         <div class="col">
             <app-counties (currentIdOutput)="setCurrentId($event)"/>
-            <app-create-city  [countyId]="selected()"/>
+            <app-create-city (saveIndicatorOutput)="indicateSave($event)" [countyId]="selected()"/>
         </div>
         <div class="col">
-            <app-cities [countyId]="selected()"/>
+            <app-cities [saved]="saved()" [countyId]="selected()"/>
         </div>
     </div>
 </main>

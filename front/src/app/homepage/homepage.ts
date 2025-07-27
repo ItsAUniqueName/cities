@@ -12,8 +12,13 @@ import { CreateCity } from "../components/create-city/create-city";
 export class Homepage {
 
   selected = signal<number>(0);
+  saved = signal<any>(0);
   
   setCurrentId(id: number){
     this.selected.set(id);
+  }
+
+  indicateSave(val: number){
+    this.saved.set(val);
   }
 }
