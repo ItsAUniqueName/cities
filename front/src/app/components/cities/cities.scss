@@ -1,0 +1,40 @@
+h2 {
+    margin-bottom: 10%;
+}
+
+div {
+    font-size: large;
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    display: block;
+    padding: 10px;
+    margin: 0;
+}
+
+p:hover {
+    background-color: #89befa !important;
+}
+
+#cityHolder:nth-child(odd) > p {
+    background-color: #ebebeb;
+}
+
+#cityHolder {
+    padding-left: 20px;
+    width: 300px;
+}
+
+input {
+    display: inline-block;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    font-size: medium;
+}
+
+button {
+    float: right;
+    margin-left: 5px;
+}

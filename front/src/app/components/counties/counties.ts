@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject, output, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, output, OutputEmitterRef, signal, WritableSignal } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { CountyService } from '../../services/county-service';
 import { County } from '../../model/County.type';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -15,18 +16,23 @@ import { County } from '../../model/County.type';
 })
 export class Counties {
 
-  currentIdOutput = output<number>();
-  selected = signal<number>(0);
+  currentIdOutput: OutputEmitterRef<number> = output<number>();
+  selected: WritableSignal<number> = signal<number>(0);
   counties: WritableSignal<County[]> = signal<County[]>([]);
   countyService: CountyService = inject(CountyService);
 
   constructor() {
     this.countyService.getAll().subscribe({
-        next: (data) => {
-            this.counties.set(data);
+        next: (counties) => {
+            this.counties.set(counties);
         },
-        error: (error) => {
-            console.error('Error fetching user:', error);
+        error: err => {
+            Swal.fire({
+              title: 'Váratlan hiba történt!',
+              text: '',
+              icon: 'error',
+              confirmButtonText: 'Ok'
+            });
         },
     });
   }

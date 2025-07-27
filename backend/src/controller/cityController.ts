@@ -2,10 +2,11 @@ import { Request, Response } from "express";
 import { logger } from "../logger";
 import { prisma } from "../prisma";
 
+//returns all city from db
 export const getCity = async (req: Request, res: Response) => {
-    logger.info('GET /city/');
     try {
         const cities = await prisma.city.findMany();
+        logger.info('Selected cities: ', cities);
         res.status(200).json(cities);
     } catch (error) {
         logger.error('Error fetching cities:', error);
@@ -13,8 +14,8 @@ export const getCity = async (req: Request, res: Response) => {
     }
 }
 
+//returns city with the given id
 export const getCityById = async (req: Request, res: Response) => {
-    logger.info('GET /city/:id');
     const id: number = parseInt(req.params.id);
     if(id){
         try {
@@ -23,6 +24,7 @@ export const getCityById = async (req: Request, res: Response) => {
                 id: id,
                 },
             });
+            logger.info('Selected city: ', cities);
             res.status(200).json(cities);
         } catch (error) {
             logger.error('Error fetching cities:', error);
@@ -33,17 +35,38 @@ export const getCityById = async (req: Request, res: Response) => {
     }
 }
 
-export const createCity = async (req: Request, res: Response) => {
-    logger.info('POST /city/');
-    const {county, name} = req.body;
+//returns cities to county
+export const getCityByCountyId = async (req: Request, res: Response) => {
+    const id: number = parseInt(req.params.id);
+    if(id){
+        try {
+            const cities = await prisma.city.findMany({
+                where: {
+                countyId: id,
+                },
+            });
+            logger.info('Selected cities: ', cities);
+            res.status(200).json(cities);
+        } catch (error) {
+            logger.error('Error fetching cities:', error);
+            res.status(500).send('Internal Server Error');
+        }
+    }else{
+        res.status(400).send('Id is required!');
+    }
+}
 
-    if(!county || !name){
+//creates city then returns the new city
+export const createCity = async (req: Request, res: Response) => {
+    const {countyId, name} = req.body;
+
+    if(!countyId || !name){
         return res.status(400).json({message: "County and city name are required!"});
     }else{
         try {
             const city = await prisma.city.create({
                 data:{
-                    countyId: county,
+                    countyId: parseInt(countyId),
                     name: name
                 },
             });
@@ -56,8 +79,8 @@ export const createCity = async (req: Request, res: Response) => {
     }
 }
 
+//updates existing city, returns the new data
 export const updateCity = async (req: Request, res: Response) => {
-    logger.info('PUT /city/');
     const {id, name} = req.body;
 
     if(!id || !name){
@@ -65,7 +88,7 @@ export const updateCity = async (req: Request, res: Response) => {
     }else{
         try {
             const city = await prisma.city.update({
-                where: { id: id },
+                where: { id: parseInt(id) },
                 data:{ name: name },
             });
             logger.info('City updated: ', city);
@@ -77,11 +100,11 @@ export const updateCity = async (req: Request, res: Response) => {
     }
 }
 
+//deletes city, returns the deleted data
 export const deleteCity = async (req: Request, res: Response) => {
-    logger.info('Delete /city/');
-    const {id, name} = req.body;
+    const id: number = parseInt(req.params.id);
 
-    if(!id || !name){
+    if(!id){
         return res.status(400).json({message: "County and city name are required!"});
     }else{
         try {
